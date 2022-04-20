@@ -1,3 +1,104 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$md-mcgpalette0: (
+    50 : #e0ecf5,
+    100 : #b3cee6,
+    200 : #80aed5,
+    300 : #4d8ec4,
+    400 : #2675b7,
+    500 : #005daa,
+    600 : #0055a3,
+    700 : #004b99,
+    800 : #004190,
+    900 : #00307f,
+    A100 : #adc5ff,
+    A200 : #7aa1ff,
+    A400 : #477cff,
+    A700 : #2d6aff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$md-mcgpalette1: (
+    50 : #fde5e5,
+    100 : #fabebd,
+    200 : #f79392,
+    300 : #f36766,
+    400 : #f14745,
+    500 : #ee2624,
+    600 : #ec2220,
+    700 : #e91c1b,
+    800 : #e71716,
+    900 : #e20d0d,
+    A100 : #ffffff,
+    A200 : #ffdada,
+    A400 : #ffa7a7,
+    A700 : #ff8e8e,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$tsa-submissions-coding-ui-primary: mat.define-palette($md-mcgpalette0);
+$tsa-submissions-coding-ui-accent: mat.define-palette($md-mcgpalette1, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$tsa-submissions-coding-ui-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$tsa-submissions-coding-ui-theme: mat.define-light-theme((
+  color: (
+    primary: $tsa-submissions-coding-ui-primary,
+    accent: $tsa-submissions-coding-ui-accent,
+    warn: $tsa-submissions-coding-ui-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($tsa-submissions-coding-ui-theme);
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 14px;
@@ -13,7 +114,7 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 8px 0;
+    margin: 12px 0;
 }
 
 p {
@@ -37,6 +138,18 @@ p {
     font-weight: 600;
 }
 
+.toolbar div {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.toolbar a:link,
+.toolbar a:visited,
+.toolbar a:hover,
+.toolbar a:active {
+    color: white;
+}
+
 .toolbar img {
     margin: 0 16px;
 }
@@ -57,11 +170,9 @@ p {
 }
 
 .content {
-    display: flex;
-    margin: 82px auto 32px;
-    padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 82px;
     align-items: center;
 }
 
@@ -91,7 +202,7 @@ svg.material-icons:not(:last-child) {
     border: 1px solid #eee;
     background-color: #fafafa;
     height: 40px;
-    width: 200px;
+    width: 300px;
     margin: 0 8px 16px;
     padding: 16px;
     display: flex;
@@ -193,33 +304,6 @@ a:hover {
     margin: 0;
 }
 
-.circle-link {
-    height: 40px;
-    width: 40px;
-    border-radius: 40px;
-    margin: 8px;
-    background-color: white;
-    border: 1px solid #eeeeee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: 1s ease-out;
-}
-
-.circle-link:hover {
-    transform: translateY(-0.25rem);
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* footer {
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    line-height: 20px;
-} */
-
 footer {
     background-color: #005DAA;
     bottom: 0;
@@ -233,39 +317,6 @@ footer {
 footer a {
     display: flex;
     align-items: center;
-}
-
-.github-star-badge {
-    color: #24292e;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    padding: 3px 10px;
-    border: 1px solid rgba(27, 31, 35, .2);
-    border-radius: 3px;
-    background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
-    margin-left: 4px;
-    font-weight: 600;
-}
-
-.github-star-badge:hover {
-    background-image: linear-gradient(-180deg, #f0f3f6, #e6ebf1 90%);
-    border-color: rgba(27, 31, 35, .35);
-    background-position: -.5em;
-}
-
-.github-star-badge .material-icons {
-    height: 16px;
-    width: 16px;
-    margin-right: 4px;
-}
-
-svg#clouds {
-    position: fixed;
-    bottom: -160px;
-    left: -230px;
-    z-index: -10;
-    width: 1920px;
 }
 
 /* Responsive Styles */
@@ -297,3 +348,5 @@ svg#clouds {
         visibility: hidden;
     }
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
