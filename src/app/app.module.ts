@@ -26,6 +26,7 @@ import { ChallangeListComponent } from './challange/challange-list.component';
 import { NgxMonacoEditorConfig } from './editor/config'
 import { MonacoEditorModule } from './editor/editor.module';
 import { FormsModule } from '@angular/forms';
+import { SilentCallbackComponent } from './auth/silent-callback.component';
 
 declare var monaco: any;
 
@@ -83,7 +84,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     GettingStartedComponent,
     DashboardComponent,
     ChallangeComponent,
-    ChallangeListComponent],
+    ChallangeListComponent,
+    SilentCallbackComponent],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,

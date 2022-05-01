@@ -12,7 +12,7 @@ export class AuthService {
   private _user: User | null | undefined;
   private _userManager: UserManager;
 
-  userProfile:UserProfile|undefined;
+  userProfile: UserProfile | undefined;
   loginChanged = this._loginChangedSubject.asObservable();
 
   constructor(private _httpClient: HttpClient) {
@@ -23,15 +23,39 @@ export class AuthService {
       post_logout_redirect_uri: `${AppConfig.clientRoot()}signout-callback`,
       redirect_uri: `${AppConfig.clientRoot()}signin-callback`,
       response_type: 'code',
-      scope: 'openid profile role tsa.submissions.coding.read tsa.submissions.coding.create'
+      scope: 'openid profile role tsa.submissions.coding.read tsa.submissions.coding.create',
+      silent_redirect_uri: `${AppConfig.clientRoot()}/silent-callback`
     };
 
     this._userManager = new UserManager(userManagerSettings);
+
+    this._userManager.events.addAccessTokenExpired(_ => {
+      this._loginChangedSubject.next(false);
+    });
+
+    this._userManager.events.addUserLoaded(user => {
+      if (this._user !== user) {
+        this._user = user;
+        this._loginChangedSubject.next(!!user && !user.expired);
+      }
+    })
+  }
+
+  private setUserProfile(user: User) {
+    this.userProfile = new UserProfile();
+    this.userProfile.id = user.profile.name;
+    this.userProfile.email = user.profile.email;
+    this.userProfile.firstName = user.profile.given_name;
+    this.userProfile.lastName = user.profile.family_name;
+    this.userProfile.role = user.profile['role'];
   }
 
   completeLogin() {
     return this._userManager.signinRedirectCallback().then(user => {
       this._user = user;
+
+      this.setUserProfile(user);
+
       this._loginChangedSubject.next(!!user && !user.expired);
       return user;
     });
@@ -58,13 +82,8 @@ export class AuthService {
         this._loginChangedSubject.next(userCurrent);
       }
 
-      if(userCurrent && !this.userProfile) {
-        this.userProfile = new UserProfile();
-        this.userProfile.id = user.profile.name;
-        this.userProfile.email = user.profile.email;
-        this.userProfile.firstName= user.profile.given_name;
-        this.userProfile.lastName= user.profile.family_name;
-        this.userProfile.role= user.profile['role'];
+      if (userCurrent && !this.userProfile) {
+        this.setUserProfile(user);
       }
 
       this._user = user;
@@ -81,5 +100,9 @@ export class AuthService {
         return null;
       }
     });
+  }
+
+  silentSignInAuthentication() {
+    return this._userManager.signinSilentCallback();
   }
 }
