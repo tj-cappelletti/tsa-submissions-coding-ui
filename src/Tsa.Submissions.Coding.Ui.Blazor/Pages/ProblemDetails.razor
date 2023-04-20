@@ -1,0 +1,32 @@
+﻿@page "/problems/{id}"
+@using Tsa.Submissions.Coding.Ui.Blazor.Services
+@using Tsa.Submissions.Coding.Ui.Blazor.Models
+@using Markdig
+@inject ProblemsService ProblemsService
+
+@if (_problem == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>@_problem.Title</h3>
+    <div>
+        @((MarkupString)Markdown.ToHtml(_problem.Description, _markdownPipeline))
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    private MarkdownPipeline _markdownPipeline;
+    private ProblemModel? _problem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+        _problem = await ProblemsService.GetAsync(Id);
+    }
+
+}
