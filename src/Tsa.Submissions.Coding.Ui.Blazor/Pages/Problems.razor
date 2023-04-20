@@ -1,0 +1,46 @@
+﻿@page "/problems"
+@using Tsa.Submissions.Coding.Ui.Blazor.Services
+@using Tsa.Submissions.Coding.Ui.Blazor.Models
+@inject NavigationManager NavigationManager
+@inject ProblemsService ProblemsService
+
+<PageTitle>Problems</PageTitle>
+
+<h1>High School Coding Problems</h1>
+
+@if (_problems == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var problem in _problems)
+            {
+                <tr>
+                    <td>@problem.Title</td>
+                    <td>
+                        <a href="/problems/@problem.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private IList<ProblemModel>? _problems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _problems = await ProblemsService.GetAsync();
+    }
+}
