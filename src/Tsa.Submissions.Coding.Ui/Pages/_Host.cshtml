@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <base href="~/" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/site.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
@@ -26,5 +27,11 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+    <script>
+        function setPageTitle(title) {
+            document.title = title;
+        }
+    </script>
+
 </body>
 </html>
