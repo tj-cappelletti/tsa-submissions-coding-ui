@@ -12,11 +12,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Tsa.Submissions.Coding.Ui.csproj", "."]
-RUN dotnet restore "./Tsa.Submissions.Coding.Ui.csproj"
+COPY ["Tsa.Submissions.Coding.Ui/Tsa.Submissions.Coding.Ui.csproj", "Tsa.Submissions.Coding.Ui/"]
+RUN dotnet restore "Tsa.Submissions.Coding.Ui/Tsa.Submissions.Coding.Ui.csproj"
 COPY . .
-WORKDIR "/src/."
-RUN dotnet build "./Tsa.Submissions.Coding.Ui.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Tsa.Submissions.Coding.Ui"
+RUN dotnet build "Tsa.Submissions.Coding.Ui.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
