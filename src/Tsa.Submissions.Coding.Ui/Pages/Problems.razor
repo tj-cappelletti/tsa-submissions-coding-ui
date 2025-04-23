@@ -1,0 +1,43 @@
+﻿@page "/problems"
+@using Tsa.Submissions.Coding.Ui.Models
+<h3>Problems</h3>
+
+@if (_problems == null)
+{
+    <p>Loading...</p>
+}
+else if (!_problems.Any())
+{
+    <p>No problems found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var problem in _problems)
+        {
+            <li>
+                <a href="/problems/@problem.Id">@problem.Title</a>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Problem>? _problems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Replace "api/problems" with your actual API endpoint
+            _problems = await HttpClient!.GetFromJsonAsync<List<Problem>>("api/problems");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching problems: {ex.Message}");
+        }
+    }
+
+    [Inject]
+    private HttpClient? HttpClient { get; set; }
+}
