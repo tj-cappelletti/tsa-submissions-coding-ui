@@ -1,0 +1,52 @@
+﻿@page "/problems/{id}"
+@using Tsa.Submissions.Coding.Ui.Models
+@using Markdig
+@inject HttpClient HttpClient
+@* ReSharper disable once InconsistentNaming *@
+@inject IJSRuntime JSRuntime
+
+@if (_problem == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="markdown-content">@((MarkupString)_renderedDescription!)</div>
+}
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    private Problem? _problem;
+    private string? _renderedDescription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Replace "api/problems/{id}" with your actual API endpoint
+            _problem = await HttpClient.GetFromJsonAsync<Problem>($"api/problems/{Id}");
+
+            if (_problem == null)
+            {
+                Console.WriteLine($"Problem with ID {Id} not found.");
+            }
+            else if (_problem.Description == null)
+            {
+                Console.WriteLine($"Problem with ID {Id} has no description.");
+            }
+            else
+            {
+                await JSRuntime.InvokeVoidAsync("setPageTitle", _problem.Title);
+
+                var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+                _renderedDescription = Markdown.ToHtml(_problem.Description, pipeline);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching problem details: {ex.Message}");
+        }
+    }
+}
