@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://api.coding.tsa.local.webstorm.cloud/") });
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
