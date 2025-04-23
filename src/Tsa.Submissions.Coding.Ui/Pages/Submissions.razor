@@ -1,0 +1,86 @@
+﻿@page "/problems/{id}/submission"
+@using Tsa.Submissions.Coding.Ui.Models
+@inject HttpClient HttpClient
+@* ReSharper disable once InconsistentNaming *@
+@inject IJSRuntime JSRuntime
+
+@if (_problem == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h3>@_title</h3>
+
+    // create a table of the submissions
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Submission ID</th>
+            <th>Language</th>
+            <th>Created At</th>
+            <th>Result</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (_submissions != null && _submissions.Any())
+        {
+            foreach (var submission in _submissions)
+            {
+                <tr>
+                    <td>@submission.Id</td>
+                    <td>@submission.Language</td>
+                    <td>@submission.SubmittedOn?.ToString("T")</td>
+                    <td>@submission.Result</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No submissions found.</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+)
+
+@code {
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    private Problem? _problem;
+    private List<Submission>? _submissions;
+    private string? _title;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Replace "api/problems/{id}" with your actual API endpoint
+            _problem = await HttpClient.GetFromJsonAsync<Problem>($"api/problems/{Id}");
+
+            if (_problem == null)
+            {
+                Console.WriteLine($"Problem with ID {Id} not found.");
+            }
+            else if (_problem.Description == null)
+            {
+                Console.WriteLine($"Problem with ID {Id} has no description.");
+            }
+            else
+            {
+                _title = $"Submission - {_problem.Title}";
+                await JSRuntime.InvokeVoidAsync("setPageTitle", _title);
+
+                _submissions = await HttpClient.GetFromJsonAsync<List<Submission>>($"api/problems/{Id}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching problem details: {ex.Message}");
+        }
+    }
+}
