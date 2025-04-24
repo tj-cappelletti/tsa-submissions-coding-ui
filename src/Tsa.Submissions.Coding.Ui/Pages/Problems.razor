@@ -1,8 +1,15 @@
 ﻿@page "/problems"
 @using Tsa.Submissions.Coding.Ui.Models
+@inject IHttpContextAccessor HttpContextAccessor
 <h3>Problems</h3>
 
-@if (_problems == null)
+@if (!_isLoggedIn)
+{
+    <p>You must log in first to view the problems</p>
+
+    <a class="nav-link" href="/login">Login</a>
+}
+else if (_problems == null)
 {
     <p>Loading...</p>
 }
@@ -23,10 +30,15 @@ else
 }
 
 @code {
+    private bool _isLoggedIn;
     private List<Problem>? _problems;
 
     protected override async Task OnInitializedAsync()
     {
+        var username = HttpContextAccessor.HttpContext?.Request.Cookies["username"];
+
+        _isLoggedIn = !string.IsNullOrWhiteSpace(username);
+
         try
         {
             // Replace "api/problems" with your actual API endpoint

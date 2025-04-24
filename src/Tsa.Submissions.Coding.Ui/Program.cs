@@ -1,10 +1,36 @@
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://api.coding.tsa.local.webstorm.cloud/") });
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://coding-api-service:8080") });
+var apiBaseUrl = builder.Configuration["Api:BaseUrl"];
+
+if (string.IsNullOrEmpty(apiBaseUrl))
+{
+    throw new InvalidOperationException("The configuration key 'Api:BaseUrl' is missing or empty.");
+}
+
+var token = builder.Configuration["Api:Token"];
+
+if (string.IsNullOrEmpty(token))
+{
+    throw new InvalidOperationException("The configuration key 'Api:Token' is missing or empty.");
+}
+
+builder.Services.AddScoped(sp =>
+{
+    var httpClient = new HttpClient
+    {
+        BaseAddress = new Uri(apiBaseUrl)
+    };
+
+    httpClient.DefaultRequestHeaders.Add("X-API-Key", token);
+
+    return httpClient;
+});
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
