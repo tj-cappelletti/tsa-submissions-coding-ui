@@ -68,6 +68,7 @@ else
             }
 
             await JSRuntime.InvokeVoidAsync("setCookie", "username", authenticationResult.UserName, 7);
+            await JSRuntime.InvokeVoidAsync("setCookie", "api_key", authenticationResult.ApiKey, 7);
 
             Navigation.NavigateTo("/problems");
         }
