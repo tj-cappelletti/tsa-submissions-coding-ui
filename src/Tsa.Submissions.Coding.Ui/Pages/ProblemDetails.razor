@@ -3,6 +3,7 @@
 @using Markdig
 @inject HttpClient HttpClient
 @* ReSharper disable once InconsistentNaming *@
+@inject IHttpContextAccessor HttpContextAccessor
 @inject IJSRuntime JSRuntime
 
 @if (_problem == null)
@@ -12,6 +13,9 @@
 else
 {
     <div class="markdown-content">@((MarkupString)_renderedDescription!)</div>
+    <br />
+    <a href="/problems/@Id/submissions">View Submissions for Problem</a>
+    <br />
 }
 
 @code {
@@ -25,8 +29,21 @@ else
     {
         try
         {
-            // Replace "api/problems/{id}" with your actual API endpoint
-            _problem = await HttpClient.GetFromJsonAsync<Problem>($"api/problems/{Id}");
+            var apiKey = HttpContextAccessor.HttpContext?.Request.Cookies["api_key"];
+            
+            var request = new HttpRequestMessage(HttpMethod.Get, $"api/problems/{Id}");
+            request.Headers.Add("X-Api-Key", apiKey);
+            
+            var response = await HttpClient.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                _problem = await response.Content.ReadFromJsonAsync<Problem>();
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+            }
 
             if (_problem == null)
             {
