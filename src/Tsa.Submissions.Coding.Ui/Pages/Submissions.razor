@@ -2,6 +2,7 @@
 @using Tsa.Submissions.Coding.Ui.Models
 @inject HttpClient HttpClient
 @* ReSharper disable once InconsistentNaming *@
+@inject IHttpContextAccessor HttpContextAccessor
 @inject IJSRuntime JSRuntime
 
 @if (_problem == null)
@@ -44,7 +45,7 @@ else
         </tbody>
     </table>
 }
-)
+
 
 @code {
 
@@ -59,8 +60,21 @@ else
     {
         try
         {
-            // Replace "api/problems/{id}" with your actual API endpoint
-            _problem = await HttpClient.GetFromJsonAsync<Problem>($"api/problems/{Id}");
+            var apiKey = HttpContextAccessor.HttpContext?.Request.Cookies["api_key"];
+
+            var request = new HttpRequestMessage(HttpMethod.Get, $"api/problems/{Id}");
+            request.Headers.Add("X-Api-Key", apiKey);
+
+            var response = await HttpClient.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                _problem = await response.Content.ReadFromJsonAsync<Problem>();
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+            }
 
             if (_problem == null)
             {
@@ -72,10 +86,24 @@ else
             }
             else
             {
-                _title = $"Submission - {_problem.Title}";
+                _title = $"Submissions - {_problem.Title}";
                 await JSRuntime.InvokeVoidAsync("setPageTitle", _title);
 
-                _submissions = await HttpClient.GetFromJsonAsync<List<Submission>>($"api/problems/{Id}");
+                request = new HttpRequestMessage(HttpMethod.Get, $"api/submissions?problemId={Id}");
+                request.Headers.Add("X-Api-Key", apiKey);
+
+                response = await HttpClient.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    _submissions = await response.Content.ReadFromJsonAsync<List<Submission>>();
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}");
+                }
+
+                _submissions = await HttpClient.GetFromJsonAsync<List<Submission>>($"api/submissions?problemId={Id}");
             }
         }
         catch (Exception ex)
