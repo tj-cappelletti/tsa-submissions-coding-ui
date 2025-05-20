@@ -1,0 +1,61 @@
+name: Continuous Integration Workflow
+
+on:
+  push:
+
+  pull_request:
+    
+  workflow_dispatch:
+
+jobs:
+  gitVersionJob:
+    name: CI - GitVersion Workflow
+    uses: webstorm-tech/workflows/.github/workflows/gitversion-workflow.yml@v5
+
+  buildApplicationJob:
+    name: Build Application
+    needs: [gitVersionJob]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22
+
+    - name: Install dependencies
+      run: npm install
+
+    # - name: Run tests
+    #   run: npm test
+
+    - name: Build Angular application
+      run: npm run build --prod
+
+  buildDockerContainerJob:
+    name: CI - Build Docker Container
+    needs: [gitVersionJob, buildApplicationJob]
+    uses: webstorm-tech/workflows/.github/workflows/docker-build-container-workflow.yml@v5
+    with:
+      dockerfile: Dockerfile
+      dockerNamespace: tsa/submissions/coding/ui
+      dockerRegistry: ghcr.io
+      dockerRepository: tj-cappelletti
+      dockerWorkingDirectory: .
+      majorVersion: ${{ needs.gitVersionJob.outputs.majorReleaseLabel }}
+      majorMinorVersion: ${{ needs.gitVersionJob.outputs.majorMinorReleaseLabel }}
+      pushContainerImage: ${{ github.event_name != 'pull_request' }}
+      semVer: ${{ needs.gitVersionJob.outputs.semVer }}
+    secrets:
+      REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  tagRepositoryJob:
+    name: CI - Tag Repository
+    if: github.ref == 'refs/heads/main'
+    needs: [gitVersionJob]
+    uses: webstorm-tech/workflows/.github/workflows/github-tag-repo-workflow.yml@v5
+    with:
+      semVer: ${{ needs.gitVersionJob.outputs.semVer }}
