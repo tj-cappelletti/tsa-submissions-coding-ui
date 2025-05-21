@@ -83,3 +83,12 @@ body[data-theme="dark"] .card-body {
 .card-title {
   font-weight: 600;
 }
+
+.btn-primary {
+  background-color: #ec3725 !important;
+  border-color: #ec3725 !important;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: #c42d1e !important;
+  border-color: #c42d1e !important;
+}
