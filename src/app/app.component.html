@@ -1,31 +1,44 @@
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <a routerLink="/">
-    <img width="100" alt="TSA Logo"
-      src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTAwLjg3IDY1NS4wNSI+PGRlZnM+PHN0eWxlPi5ie2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImIiIGQ9Ik02My40Myw2NTQuNzFjNC44My0xMi41Nyw5LjU1LTI0LjgzLDE0LjI2LTM3LjEsMzAuNDMtNzkuMTcsNjAuOTMtMTU4LjMxLDkxLjI1LTIzNy41MiwxOC4zOS00OC4wNCwzNi42My05Ni4xNCw1NC42Ny0xNDQuMzIsNi4xOC0xNi41MSw3Ljk4LTMzLjYyLDQuMDYtNTEuMDItNC43NS0yMS4wNS0xOC4xMi0zMi40Ni0zOS42Ni0zNC4wMi0yLjI4LS4xNy00LjU4LS4xOS02Ljg3LS4xOS01NC4zNC0uMDEtMTA4LjY4LDAtMTYzLjAyLS4wMS0xNS4wNSwwLTIxLjY5LTkuNzEtMTYuMjItMjMuNjgsLjc3LTEuOTYsMS42Mi0zLjksMi4zNy01Ljg3QzE5LjA2LDgyLjIsMzMuOTEsNDMuNDQsNDguNTMsNC41OSw0OS44NiwxLjA3LDUxLjQyLDAsNTUuMTEsMGM1My44NSwuMTIsMTA3LjcsLjA5LDE2MS41NCwuMDksNDMxLjYsMCw4NjMuMiwwLDEyOTQuNzksMCwxNC4wOSwwLDI4LjAxLDEuMTUsNDEuNzMsNC43NCwxOC41OSw0Ljg3LDMzLjI2LDE1LjI5LDQzLjE5LDMxLjUxLDguODQsMTQuNDQsMTYuNzMsMjkuNDksMjQuNDgsNDQuNTcsNDEuMDYsNzkuOSw4MS45NCwxNTkuODksMTIyLjksMjM5Ljg0LDI2LjQ3LDUxLjY2LDUyLjk3LDEwMy4zLDc5LjQ3LDE1NC45NCwyMi42Myw0NC4xLDQ1LjMxLDg4LjE4LDY3Ljg4LDEzMi4zMSw0LjU5LDguOTksOS40MiwxOCw5Ljc3LDI4LjQ0LC4yNyw4LjItMy4yMiwxMy42OC0xMS4xNywxNS42NS02LjksMS43MS0xNC4xNSwyLjc3LTIxLjI0LDIuNzgtMTc3LjI2LC4xNS0zNTQuNTEsLjEyLTUzMS43NywuMDgtNC4yNCwwLTguNS0uMjgtMTIuNzEtLjc4LTYuODUtLjgtOS4yLTMuNzEtOC40My0xMC41MSwuMzMtMi44NywxLjE2LTUuNzUsMi4yLTguNDYsMjAuNTUtNTMuNSw0MS4yLTEwNi45Nyw2MS42Ny0xNjAuNSwxLjMtMy4zOSwzLjQyLTMuMjMsNi4wNi0zLjIzLDQ3LjQ2LC4wMiw5NC45MywuMDMsMTQyLjM5LS4wMSwzLjQyLDAsNi44Ni0uMjUsMTAuMjUtLjY3LDEyLjEzLTEuNSwxOS4xMS0xMC45MywxNi43MS0yMi45NC0uNzItMy42Mi0yLjA0LTcuMjgtMy44My0xMC41MS0zMC43NC01NS4yOS02MS41NC0xMTAuNTMtOTIuNDQtMTY1LjczLTE2LjMzLTI5LjE2LTMyLjgxLTU4LjIzLTQ5LjMzLTg3LjI4LTcuMTItMTIuNTItMTUuMzItMjQuNDItMjkuNTktMjkuMzctNy41Ny0yLjYyLTE1LjktNC4yNS0yMy44OS00LjI2LTI1MS40LS4yMi01MDIuOC0uMjEtNzU0LjItLjEzLTI1LjIyLDAtNDguOTEsNS41Ny02OS4xMywyMS43Ny0xNS44LDEyLjY2LTI3LjAzLDI4LjkzLTM0LjczLDQ3LjMyLTEyLjM4LDI5LjU5LTIzLjk4LDU5LjUxLTM1LjUxLDg5LjQ1LTQwLjc1LDEwNS45LTgxLjI5LDIxMS44OC0xMjIuMDcsMzE3Ljc4LTIuMTQsNS41Ni01LjExLDEwLjk5LTguNjMsMTUuNzktNi43Miw5LjEzLTE2LjU5LDEyLjI4LTI3LjU0LDEyLjI4LTc5LjM4LC4wMy0xNTguNzYsLjAyLTIzOC4xNCwwLS42MSwwLTEuMjItLjEzLTIuMzYtLjI2WiIvPjxwYXRoIGNsYXNzPSJiIiBkPSJNOTAxLjM5LDE3OC4zYy0xLjg0LDYuNjEtNC4zNiwxMi43NS01LjE1LDE5LjEtMS43NCwxNC4wMiwyLjg4LDIxLjk4LDE1LjgyLDI3LjU3LDI0LjIxLDEwLjQ3LDQ4LjY4LDIwLjMzLDcyLjg2LDMwLjg3LDQ3LjQ4LDIwLjY5LDk0LjkxLDQxLjQ4LDE0Mi4xOCw2Mi42MywyMC4yLDkuMDMsMzUuNzYsMjMuMiw0NC4wNiw0NC4zNCw5LjUyLDI0LjI0LDkuMDMsNDguNjEtLjEsNzIuNjYtMTkuMzYsNTAuOTctMzguOTksMTAxLjgzLTU4Ljg2LDE1Mi42LTguNzEsMjIuMjYtMjUuNDgsMzcuNTctNDUuNTgsNDkuNTUtMjAuNTgsMTIuMjctNDMuMDUsMTcuMzYtNjYuODQsMTcuMzYtMjAzLjI5LDAtNDA2LjU3LDAtNjA5Ljg2LDAtMTQuNjcsMC0xOC4yNS00LjcyLTEzLjEzLTE4LjI5LDE5LjY4LTUyLjA4LDM5LjU4LTEwNC4wOCw1OS4yMy0xNTYuMTcsMS4yNC0zLjI4LDMuMjQtMi45Nyw1LjY3LTIuOTYsNDYuMzIsLjA2LDkyLjY0LC4xMywxMzguOTYsLjE0LDkwLjM1LC4wMiwxODAuNywuMDQsMjcxLjA1LS4wNCwxMC45MywwLDIxLjk4LC4yMywzMi43Ny0xLjIxLDkuOTktMS4zNCwxNi40Mi04LjMzLDE5LjI1LTE4LjA3LDIuMzEtNy45NC0xLjA1LTE0LjY5LTkuNC0xOC43My0yMC4yNS05Ljc5LTQwLjU0LTE5LjUtNjAuOS0yOS4wNy02NS4wNS0zMC41OS0xMzAuMTktNjEtMTk1LjE3LTkxLjczLTkuNjUtNC41Ny0xOS4zNi05LjU3LTI3LjgyLTE1Ljk5LTE3LjEtMTIuOTgtMjIuNDMtMzEuMS0xNy4zMy01MS41NSw1Ljk0LTIzLjg1LDEyLjk1LTQ3LjQ1LDIzLjU1LTY5Ljc5LDEuMDgtMi4yOCwyLjE4LTMuNDQsNS4wMy0zLjQ0LDkyLjk3LC4xLDE4NS45NCwuMDksMjc4LjksLjEsLjMyLDAsLjY1LC4wOCwuOCwuMVoiLz48cGF0aCBjbGFzcz0iYiIgZD0iTTEwOTUuMDYsNjU0LjY3YzYuNDYtNC42NywxMi4yOS04LjcsMTcuOTEtMTIuOTksMTkuNzktMTUuMDksMzQuMTgtMzMuNzIsNDIuMzgtNTcuNzgsMTQuMTItNDEuNDQsMjkuOTktODIuMjgsNDQuNjItMTIzLjU1LDUuNjQtMTUuOSwxMS4yNy0zMi4wMSwxNC41MS00OC41LDYuNTktMzMuNTgtMy4yOS02My4yMS0yNS40NS04OC45Mi0xMS4xMS0xMi44OS0yNC42My0yMi43NS0zOS4zNy0zMS4xLTEyLjc2LTcuMjMtMTcuMTMtMTYuNy0xMi43MS0zMC43NSw0LjQ0LTE0LjExLDEwLjIzLTI3LjgxLDE1LjQ0LTQxLjY4LDQuNjQtMTIuMzUsOS4zNS0yNC42NiwxMy45LTM3LjA0LDEuMDctMi45MSwyLjM2LTQuMjksNS44OS00LjI4LDUyLjU0LC4xNSwxMDUuMDgsMCwxNTcuNjIsLjE4LDExLjc5LC4wNCwyMy43NiwuODUsMzMuNDEsOC44LDQuMiwzLjQ2LDguMDEsNy43OSwxMC44NCwxMi40MywxNC4zMiwyMy41NSwyOC4yMyw0Ny4zNCw0Mi4zOCw3MSwxLjU0LDIuNTcsMS43Niw0LjczLC42NCw3LjYxLTQzLjY0LDExMy4wMS04Ny4xOCwyMjYuMDUtMTMwLjcyLDMzOS4wOS00LjM4LDExLjM4LTguNzksMjIuNzYtMTMuMDEsMzQuMi0uOSwyLjQ0LTEuODcsMy42Ny00Ljc2LDMuNjctNTYuOC0uMDktMTEzLjU5LS4wNi0xNzAuMzktLjA4LS43NiwwLTEuNTItLjE0LTMuMTEtLjNaIi8+PC9zdmc+" />
-  </a>
-  <div style="padding-left: 0px;"><a routerLink="/">Submissions - HS Coding</a></div>
-  <!-- <div class="spacer"></div> -->
+<!-- Header -->
+<header class="navbar navbar-expand-lg navbar-light bg-light border-bottom mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="assets/images/pa-tsa-color.svg" alt="PA TSA" width="100" class="me-2" />
+      <span class="fw-bold">TSA Coding Submissions</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/problems" routerLinkActive="active">Problems</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/submissions" routerLinkActive="active">Submissions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+        </li>
+      </ul>
+      <button class="btn btn-outline-secondary ms-2" (click)="toggleTheme()" title="Toggle light/dark mode">
+        <span *ngIf="theme === 'light'" aria-label="Switch to dark mode">🌙</span>
+        <span *ngIf="theme === 'dark'" aria-label="Switch to light mode">☀️</span>
+      </button>
+    </div>
+  </div>
+</header>
 
-  <div><a *ngIf="isLoggedIn" routerLink="/dashboard">Dashboard</a></div>
-  <div><a *ngIf="isLoggedIn" routerLink="/challenges">Challenges</a></div>
-  <div><a *ngIf="isLoggedIn" routerLink="/teams">Teams</a></div>
+<!-- Main Content -->
+<main class="flex-grow-1 container my-4">
+  <router-outlet />
+</main>
 
-  <div class="spacer"></div>
-  <!-- <div>{{  }}</div> -->
-  <!-- Profile type links here -->
-  <button *ngIf="!isLoggedIn" mat-button (click)="login()">Login</button>
-  <button *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</button>
-</div>
-
-<div class="content" role="main">
-
-  <router-outlet></router-outlet>
-
-  <!-- Footer -->
-
-</div>
-
-<footer>
-  &copy; {{ year }} Pennsylvania Technology Student Association and Foundation, Inc.
+<!-- Footer -->
+<footer class="footer bg-light border-top py-3 fixed-bottom">
+  <div class="text-center">
+    <span>&copy; 2025 TSA Submissions. All rights reserved.</span>
+  </div>
 </footer>

@@ -1,33 +1,38 @@
-import {Component} from '@angular/core';
-import {AuthService} from './auth/auth.service';
+import { Component, Renderer2 } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [RouterOutlet, NgIf]
 })
-
 export class AppComponent {
-  isLoggedIn: Boolean = false;
-  year = new Date().getFullYear();
+  title = 'tsa-submissions-coding-ui';
+  theme: 'light' | 'dark' = 'light';
 
-  constructor(private _authService: AuthService) {
-    this._authService.loginChanged.subscribe((loggedIn: Boolean) => {
-      this.isLoggedIn = loggedIn;
+  constructor(private renderer: Renderer2) {
+    // Detect system/browser theme preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.theme = prefersDark ? 'dark' : 'light';
+    this.setTheme(this.theme);
+
+    // Listen for changes in system/browser theme
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      const newTheme = e.matches ? 'dark' : 'light';
+      this.theme = newTheme;
+      this.setTheme(newTheme);
     });
   }
 
-  ngOnInit() {
-    this._authService.isLoggedIn().then((loggedIn: Boolean) => {
-      this.isLoggedIn = loggedIn;
-    });
-  }
-  
-  login() {
-    this._authService.login();
+  toggleTheme() {
+    this.theme = this.theme === 'light' ? 'dark' : 'light';
+    this.setTheme(this.theme);
   }
 
-  logout() {
-    this._authService.logout();
+  setTheme(theme: 'light' | 'dark') {
+    this.renderer.setAttribute(document.body, 'data-theme', theme);
   }
 }
