@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "http://api.coding.tsa.local.webstorm.cloud",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": { "^/api": "/api" }
+  }
+}
