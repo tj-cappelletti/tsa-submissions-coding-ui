@@ -1,5 +1,6 @@
 <div class="p-5 mb-3 bg-body-tertiary rounded-3">
   <div class="container-fluid py-5">
+    <img src="assets/images/patsa_logo.png" alt="PA TSA" height="200" class="me-2" />
     <h1 class="display-5 fw-bold">Pennsylvania Technology Student Association</h1>
     <h2 class="display-6 fw-bold">Coding Submissions</h2>
     <p class="col-md-8 fs-4">Welcome to the submissions portal for PA TSA Coding competitions. Both Middle School and
@@ -13,18 +14,12 @@
     <div class="col-md-4 mb-4">
       <div class="card h-100 shadow-sm">
         <div class="card-body">
-          <h5 class="card-title">Login</h5>
-          <form>
-            <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" placeholder="Enter username">
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Enter password">
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-          </form>
+          <h5 class="card-title">Account and Login</h5>
+          <p>Since each team is allowed to use only 1 (one) laptop/computer to work on the challenges, only one user
+            account has been created ahead of time. Your username and password should have been provided to you when
+            checked into the event. If you do not have your credentials or are having trouble signing in, please see a
+            judge ASAP.</p>
+          <a [routerLink]="['/login']" class="btn btn-primary w-100 mt-3">Go to Login</a>
         </div>
       </div>
     </div>
