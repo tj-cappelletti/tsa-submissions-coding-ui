@@ -15,20 +15,36 @@ export class AuthService {
 
   getUserName(): string | null {
     const token = this.getToken();
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.unique_name;
+
+    try {
+      if (token) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+
+        return payload.unique_name;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error parsing token:', error);
+
+      return null;
     }
-    return null;
   }
 
   getUserRole(): string | null {
     const token = this.getToken();
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.role;
+    
+    try {
+      if (token) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+
+        return payload.role;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error parsing token:', error);
+      
+      return null;
     }
-    return null;
   }
 
   getToken(): string | null {
@@ -45,6 +61,7 @@ export class AuthService {
 
       // JWT exp is in seconds since epoch
       const now = Math.floor(Date.now() / 1000);
+
       if (payload.exp && payload.exp < now) {
         // Token expired
         return false;
