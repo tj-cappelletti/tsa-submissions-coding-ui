@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://api.coding.tsa.local.webstorm.cloud",
+    "target": "http://tsa.webstorm.cloud",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
