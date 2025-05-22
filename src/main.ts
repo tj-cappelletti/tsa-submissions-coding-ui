@@ -10,10 +10,3 @@ declare global {
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
-
-fetch('/assets/config.json')
-  .then(res => res.json())
-  .then(config => {
-    window['env'] = config;
-    // Bootstrap your Angular app here
-  });
