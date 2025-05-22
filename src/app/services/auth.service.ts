@@ -6,12 +6,10 @@ import { Authentication, JwtPayload, LoginResponse } from '../models/auth.models
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  readonly apiUrl: string;
+  readonly apiUrl: string = '/api/auth';
   readonly jwtKeyName = 'jwt';
 
-  constructor(private http: HttpClient) {
-    this.apiUrl = (window as any).env?.apiUrl || '/api';
-  }
+  constructor(private http: HttpClient) { }
 
   getUserName(): string | null {
     const jwtPayload = this.getTokenPayload();
@@ -29,8 +27,14 @@ export class AuthService {
     return jwtPayload.role;
   }
 
-  private getTokenPayload(): JwtPayload | null {
+  getToken(): string | null {
     const token = localStorage.getItem(this.jwtKeyName);
+
+    return token ? token : null;
+  }
+
+  private getTokenPayload(): JwtPayload | null {
+    const token = this.getToken()
 
     if (!token) {
       console.log('No token found in local storage');
@@ -85,7 +89,7 @@ export class AuthService {
       password: password,
       userName: username
     };
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, authenticationModel).pipe(
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, authenticationModel).pipe(
       map(res => {
         localStorage.setItem(this.jwtKeyName, res.token);
         return true;
