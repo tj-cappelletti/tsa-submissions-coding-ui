@@ -2,26 +2,41 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
+import { Authentication, LoginResponse } from '../models/auth.models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  readonly apiUrl: string;
+  readonly jwtKeyName = 'jwt';
 
-  getToken(): string | null {
-    return localStorage.getItem('jwt');
+  constructor(private http: HttpClient) {
+    this.apiUrl = (window as any).env?.apiUrl || '/api';
+  }
+
+  getUserName(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.unique_name;
+    }
+    return null;
   }
 
   getUserRole(): string | null {
     const token = this.getToken();
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.role; // Assuming the role is stored in the token's payload
+      return payload.role;
     }
     return null;
   }
 
+  getToken(): string | null {
+    return localStorage.getItem(this.jwtKeyName);
+  }
+
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem(this.jwtKeyName);
 
     if (!token) return false;
 
@@ -44,9 +59,13 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    return this.http.post<{ token: string }>('/api/auth/login', { username, password }).pipe(
+    var authenticationModel: Authentication = {
+      password: password,
+      userName: username
+    };
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, authenticationModel).pipe(
       map(res => {
-        localStorage.setItem('jwt', res.token);
+        localStorage.setItem(this.jwtKeyName, res.token);
         return true;
       }),
       catchError(() => of(false))
@@ -54,7 +73,6 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('jwt');
-    // Optionally, you can also clear any user-related data here
+    localStorage.removeItem(this.jwtKeyName);
   }
 }
