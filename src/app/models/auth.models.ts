@@ -14,3 +14,8 @@ export interface LoginResponse {
   expiration: string;
   token: string;
 }
+
+export class Roles {
+  static readonly Judge = 'judge';
+  static readonly Participant = 'participant';
+}
