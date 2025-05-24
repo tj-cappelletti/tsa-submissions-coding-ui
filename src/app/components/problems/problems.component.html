@@ -22,7 +22,7 @@
       <td>{{ problem.testSets?.length ?? 0 }}</td>
       <td>
         <!-- Example action buttons, you can add routerLinks here -->
-        <button class="btn btn-sm btn-primary me-2">View</button>
+        <a [routerLink]="['/problems', problem.id]" class="btn btn-sm btn-primary me-2">View</a>
         <a [routerLink]="['/problems', problem.id, 'edit']" class="btn btn-sm btn-secondary me-2">Edit</a>
         <button *ngIf="userRole === Roles.Judge" class="btn btn-sm btn-secondary me-2">Delete</button>
       </td>
@@ -34,4 +34,4 @@
   No problems found.
 </div>
 
-<a [routerLink]="['/problems/form']" class="btn btn-primary w-100 mt-3">Create Problem</a>
+<a [routerLink]="['/problems/new']" class="btn btn-primary w-100 mt-3">Create Problem</a>
