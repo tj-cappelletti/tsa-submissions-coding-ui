@@ -19,7 +19,9 @@
     "@angular/router": "^19.2.0",
     "bootstrap": "^5.3.6",
     "marked": "^15.0.12",
+    "monaco-editor": "^0.52.2",
     "ngx-markdown": "^19.1.1",
+    "ngx-monaco-editor-v2": "^19.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
