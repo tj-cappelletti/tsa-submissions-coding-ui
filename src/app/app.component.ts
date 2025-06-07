@@ -2,6 +2,7 @@ import { Component, Renderer2 } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { AuthService } from './services/auth.service';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,10 @@ export class AppComponent {
   title = 'tsa-submissions-coding-ui';
   theme: 'light' | 'dark' = 'light';
 
-  constructor(private renderer: Renderer2, private authService: AuthService) {
+  constructor(
+    private renderer: Renderer2,
+    private authService: AuthService,
+    private themeService: ThemeService) {
     // Detect system/browser theme preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     this.theme = prefersDark ? 'dark' : 'light';
@@ -34,6 +38,7 @@ export class AppComponent {
   }
 
   setTheme(theme: 'light' | 'dark') {
+    this.themeService.setTheme(this.theme);
     this.renderer.setAttribute(document.body, 'data-theme', theme);
   }
 
