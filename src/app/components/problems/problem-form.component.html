@@ -17,21 +17,42 @@
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description (Markdown supported)</label>
-                <textarea id="description" class="form-control" [(ngModel)]="description" name="description"
-                    rows="10" required></textarea>
+                <textarea id="description" class="form-control" [(ngModel)]="description" name="description" rows="10"
+                    required></textarea>
             </div>
         </div>
         <div class="tab-pane fade" id="preview" role="tabpanel" aria-labelledby="preview-tab">
-            <h2>{{ title }}</h2>
-            <div class="mb-3">
+            <h1>{{ title }}</h1>
+            <div class="container-fluid">
+                <div *ngIf="description" markdown>
+                    {{ description }}
+                </div>
+            </div>
+            <!-- <div class="mb-3">
                 <label class="form-label">Preview</label>
                 <div class="border p-2 bg-light" style="min-height: 400px;">
                     <markdown [data]="description || ''"></markdown>
                 </div>
-            </div>
+            </div> -->
         </div>
+        <div class="mb-3">
+            <label for="testSetsJson" class="form-label">Test Sets (as JSON)</label>
+            <ngx-monaco-editor
+                [(ngModel)]="testSetsJson"
+                [options]="{
+                    language: 'json',
+                    theme: monacoTheme,
+                    automaticLayout: true,
+                    lineNumbers: 'on',
+                    minimap: { enabled: false }
+                }"
+                name="testSetsJson"
+                style="height: 250px; border: 1px solid #ced4da; border-radius: 0.25rem;"
+                required>
+            </ngx-monaco-editor>
+        </div>
+        <button type="submit" class="btn btn-primary">{{ problem ? 'Update' : 'Create' }} Problem</button>
+        <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+        <div *ngIf="success" class="alert alert-success mt-3">{{ success }}</div>
     </div>
-    <button type="submit" class="btn btn-primary">{{ problem ? 'Update' : 'Create' }} Problem</button>
-    <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
-    <div *ngIf="success" class="alert alert-success mt-3">{{ success }}</div>
 </form>
